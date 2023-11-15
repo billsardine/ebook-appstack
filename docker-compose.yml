@@ -1,0 +1,33 @@
+services:
+  calibre:
+    image: ghcr.io/linuxserver/calibre
+    container_name: calibre
+    environment:
+      - PUID=1036
+      - PGID=100
+      - TZ=America/New_York
+    volumes:
+      - ./calibre/config:/config
+      - ./calibre/upload:/uploads
+      - ./calibre/plugins:/plugins
+      - /volume1/plex_share/Books:/Calibre_Library
+      - /volume1/plex_share/Books:/books
+    ports:
+      - 8100:8080
+      - 8101:8081
+    restart: unless-stopped
+  calibre-web:
+    image: ghcr.io/linuxserver/calibre-web
+    container_name: calibre-web
+    environment:
+      - PUID=1036
+      - PGID=100
+      - TZ=America/New_York
+    volumes:
+      - ./calibre-web/config:/config
+      - /volume1/plex_share/Books:/books
+    restart: unless-stopped
+    depends_on:
+      - calibre
+    ports:
+      - 8102:8083
