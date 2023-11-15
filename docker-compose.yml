@@ -10,8 +10,8 @@ services:
       - ./calibre/config:/config
       - ./calibre/upload:/uploads
       - ./calibre/plugins:/plugins
-      - /volume1/plex_share/Books:/Calibre_Library
-      - /volume1/plex_share/Books:/books
+      - ${MEDIA_LOCATION}:/Calibre_Library
+      - ${MEDIA_LOCATION}:/books
     ports:
       - 8100:8080
       - 8101:8081
@@ -25,7 +25,7 @@ services:
       - TZ=America/New_York
     volumes:
       - ./calibre-web/config:/config
-      - /volume1/plex_share/Books:/books
+      - ${MEDIA_LOCATION}:/books
     restart: unless-stopped
     depends_on:
       - calibre
